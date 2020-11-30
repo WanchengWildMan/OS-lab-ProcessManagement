@@ -19,7 +19,7 @@ public class JobYielder implements Runnable {
 
             Job newjob = new Job(nowpid, new Random().nextInt(50));
             jobQ.push(newjob);
-            System.out.println("New job,pid"+newjob.pid);
+            System.out.println("产生新任务，其pid为"+newjob.pid);
             try {
                 Thread.sleep(new Random().nextInt(10));
             } catch (InterruptedException e) {

@@ -38,8 +38,8 @@ public class JobPriorityQueue {
     public void printQ() {
         IOlock.lock();
         try {
-            System.out.println("Jobs in queue:");
-            if (isempty) System.out.println("Queue empty!");
+            System.out.println("任务队列中的任务pid:");
+            if (isempty) System.out.println("队列空!");
             else {
                 boolean isfirst = true;
                 for (int i = head; (i != (tail + 1) % QSIZE) || isfirst; i = (i + 1) % QSIZE) {
@@ -49,7 +49,7 @@ public class JobPriorityQueue {
             }
             //如果队满则必须先让第一个输出
             System.out.println("");
-            System.out.println("Job during time in queue:");
+            System.out.println("任务队列中的任务的服务时间:");
             if (isempty) System.out.println("Queue empty!");
             else {
                 boolean isfirst = true;
@@ -63,7 +63,18 @@ public class JobPriorityQueue {
             IOlock.unlock();
         }
     }
-
+    public void addwaittime(Job job){
+        mutex.lock();
+        if (isempty) System.out.println("Queue empty!");
+        else {
+            boolean isfirst = true;
+            for (int i = head; (i != (tail + 1) % QSIZE) || isfirst; i = (i + 1) % QSIZE) {
+                q[i].waittime+=job.dtime;
+                isfirst = false;
+            }
+        }
+        mutex.unlock();
+    }
     public void push(Job job) {
         mutex.lock();
         try {
